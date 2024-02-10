@@ -191,11 +191,10 @@ install_continue() {
 
 while :; do
   case $1 in
-  -s | --start) install_start && post_reboot && time_reboot "15" ;;
+  -s | --start) install_start && install_continue ;;
   -c | --continue)
     #rm /root/Install-Sin-Key.sh &>/dev/null
     sed -i '/Instalador/d' /root/.bashrc
-    install_continue
     break
     ;;
   # -u | --update)
@@ -218,7 +217,7 @@ wget https://raw.githubusercontent.com/jorgevps10/LORLACK/main/LINKS-LIBRERIAS/S
 chmod +x /usr/bin/SPR
 
 #LACASITA V9
-() {
+Lacasita() {
   clear && clear
   msgi -bar2
   echo -ne "\033[1;97m Digite su slogan: \033[1;32m" && read slogan
@@ -366,7 +365,7 @@ echo -ne "\033[1;97mDigite solo el numero segun su respuesta:\e[32m "
 read opcao
 case $opcao in
 1)
-  install_LACASITA
+  Lacasita
   ;;
 2)
   install_mod
