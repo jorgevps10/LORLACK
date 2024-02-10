@@ -169,7 +169,7 @@ install_start() {
   apt upgrade -y
 }
 
-install_continue() {
+install_paquetes() {
   os_system
   msg -bar
   echo -e "      \e[5m\033[1;100m   COMPLETANDO PAQUETES PARA EL SCRIPT   \033[1;37m"
@@ -191,7 +191,7 @@ install_continue() {
 
 while :; do
   case $1 in
-  -s | --start) install_start && post_reboot ;;
+  -s | --start) install_start && install_paquetes ;;
   -c | --continue)
     #rm /root/Install-Sin-Key.sh &>/dev/null
     sed -i '/Instalador/d' /root/.bashrc
