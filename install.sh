@@ -169,7 +169,7 @@ install_start() {
   apt upgrade -y
 }
 
-install_paquetes() {
+install_continue() {
   os_system
   msg -bar
   echo -e "      \e[5m\033[1;100m   COMPLETANDO PAQUETES PARA EL SCRIPT   \033[1;37m"
@@ -191,7 +191,7 @@ install_paquetes() {
 
 while :; do
   case $1 in
-  -s | --start) install_start && install_paquetes ;;
+  -s | --start) install_start && post_reboot && time_reboot "15" ;;
   -c | --continue)
     #rm /root/Install-Sin-Key.sh &>/dev/null
     sed -i '/Instalador/d' /root/.bashrc
@@ -206,45 +206,6 @@ while :; do
   *) exit ;;
   esac
 done
-install_start() {
-  msg -bar
-
-  echo -e "\e[1;97m           \e[5m\033[1;100m   ACTULIZACION DE SISTEMA   \033[1;37m"
-  msg -bar
-  print_center -ama "Se actualizaran los paquetes del sistema.\n Puede demorar y pedir algunas confirmaciones.\n"
-  msg -bar3
-  msg -ne "\n Desea continuar? [S/N]: "
-  read opcion
-  [[ "$opcion" != @(s|S) ]] && stop_install
-  clear && clear
-  msg -bar
-  echo -e "\e[1;97m           \e[5m\033[1;100m   ACTULIZACION DE SISTEMA   \033[1;37m"
-  msg -bar
-  os_system
-  repo "${vercion}"
-  apt update -y
-  apt upgrade -y
-}
-
-install_continue() {
-  os_system
-  msg -bar
-  echo -e "      \e[5m\033[1;100m   COMPLETANDO PAQUETES PARA EL SCRIPT   \033[1;37m"
-  msg -bar
-  print_center -ama "$distro $vercion"
-  print_center -verd "INSTALANDO DEPENDENCIAS"
-  msg -bar3
-  dependencias
-  msg -bar3
-  print_center -azu "Removiendo paquetes obsoletos"
-  apt autoremove -y &>/dev/null
-  sleep 2
-  tput cuu1 && tput dl1
-  msg -bar
-  print_center -ama "Si algunas de las dependencias fallo!!!\nal terminar, puede intentar instalar\nla misma manualmente usando el siguiente comando\napt install nom_del_paquete"
-  msg -bar
-  read -t 60 -n 1 -rsp $'\033[1;39m       << Presiona enter para Continuar >>\n'
-}
 
 clear && clear
 msg -bar2
