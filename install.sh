@@ -192,17 +192,6 @@ install_continue() {
 while :; do
   case $1 in
   -s | --start) install_start && install_continue ;;
-  -c | --continue)
-    #rm /root/Install-Sin-Key.sh &>/dev/null
-    sed -i '/Instalador/d' /root/.bashrc
-    break
-    ;;
-  # -u | --update)
-  #   install_start
-  #   install_continue
-  #   break
-  # ;;
-  *) exit ;;
   esac
 done
 
