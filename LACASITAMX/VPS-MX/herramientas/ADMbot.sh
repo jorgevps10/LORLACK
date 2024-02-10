@@ -1,79 +1,24 @@
 #!/bin/bash
-clear
-clear
-# DIRECCIONES DE CARPETAS Y ARCHIVOS 
-
-SCPdir="/etc/VPS-MX" && [[ ! -d ${SCPdir} ]] && exit 1
-SCPusr="${SCPdir}/controlador" && [[ ! -d ${SCPusr} ]] && mkdir ${SCPusr}
-SCPfrm="${SCPdir}/herramientas" && [[ ! -d ${SCPfrm} ]] && mkdir ${SCPfrm}
-SCPinst="${SCPdir}/protocolos" && [[ ! -d ${SCPfrm} ]] && mkdir ${SCPfrm}
-SCPidioma="${SCPdir}/idioma" && [[ ! -e ${SCPidioma} ]] && touch ${SCPidioma}
-mkdir -p /etc/BOT &>/dev/null
-mkdir -p /etc/BOT-C &>/dev/null
-mkdir -p /etc/BOT-A &>/dev/null
-mkdir -p /etc/BOT-GEN &>/dev/null
-mkdir -p /etc/BOT-C2 &>/dev/null
-mkdir -p /etc/BOT-TEMP &>/dev/null
-USRdatacredi="/etc/BOT-C2/creditos"
-
-##### SERVIDOR TELEGRAM PERSONAL
-[[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
-[[ ! -e "/bin/ShellBot.sh" ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/lacasitamx/BOT/master/ShellBot.sh &> /dev/null
-[[ -e /etc/texto-bot ]] && rm /etc/texto-bot
-
-##### VERIFICANDO  PAQUETES PRIMARIOS
-
-[[ $(dpkg --get-selections|grep -w "jq"|head -1) ]] || apt-get install jq -y &>/dev/null
-[[ $(dpkg --get-selections|grep -w "vnstat"|head -1) ]] || apt-get install vnstat -y &>/dev/null
-[[ $(dpkg --get-selections|grep -w "vnstati"|head -1) ]] || apt-get install vnstati -y &>/dev/null
-[[ $(dpkg --get-selections|grep -w "nmap"|head -1) ]] || apt-get install nmap -y &>/dev/null
-
-## INGRESO DE TOKEN BOT
-id="$1"
-[[ -z $1 ]] && exit
-TOKEN="$2"
-[[ -z "$TOKEN" ]] && exit 1 #SEM TOKEN, SEM BOT
-IDIOMA="$(cat ${SCPidioma})" && [[ -z $IDIOMA ]] && IDIOMA="es" #ARGUMENTO 2 (IDIOMA)
-USERLIB="$3"
-[[ -z "$USERLIB" ]] && exit 1 #USUARIO
-PASSLIB="$4"
-[[ -z "$PASSLIB" ]] && exit 1 #SENHA
-LINE='━━━━━━━━━━━━━━━━━━━━'
-USRdatabase="/etc/VPS-MX/VPS-MXuser"
-#IMPORTANDO API
+#===================================================
+#   SCRIPT: BOT SSHPLUS MANAGER
+#   DATA ATT: 26 de Jan 2024
+#   DESENVOLVIDO POR: CRAZY_VPN
+#   API SHELLBOT: SHAMAN
+#   CONTATO TELEGRAM: http://t.me/crazy_vpn
+#   CANAL TELEGRAM: http://t.me/sshplus
+#===================================================
+[[ ! -d /etc/SSHPlus ]] && exit 0
+[[ ! -d /etc/bot ]] && exit 0
 source ShellBot.sh
-ShellBot.init --token "$TOKEN"
+api_bot=$1
+id_admin=$2
+[[ -z $api_bot ]] && exit 0
+[[ -z $id_admin ]] && exit 0
+[[ ! -e /usr/lib/licence ]] && exit 0
+ativos='/etc/bot/lista_ativos'
+suspensos='/etc/bot/lista_suspensos'
+ShellBot.init --token "$api_bot" --monitor --return map --flush
 ShellBot.username
-# SUPRIME ERROS
-exec 2>/dev/null
-# SISTEMA DE PIDS
-dropbear_pids () {
-unset pids
-port_dropbear=`ps aux | grep dropbear | awk NR==1 | awk '{print $17;}'`
-log=/var/log/auth.log
-loginsukses='Password auth succeeded'
-[[ -z $port_dropbear ]] && return 1
-for port in `echo $port_dropbear`; do
- for pidx in $(ps ax |grep dropbear |grep "$port" |awk -F" " '{print $1}'); do
-  pids="${pids}$pidx\n"
- done
-done
-for pid in `echo -e "$pids"`; do
-  pidlogs=`grep $pid $log |grep "$loginsukses" |awk -F" " '{print $3}'`
-  i=0
-    for pidend in $pidlogs; do
-    let i++
-    done
-    if [[ $pidend ]]; then
-    login=$(grep $pid $log |grep "$pidend" |grep "$loginsukses")
-    PID=$pid
-    user=`echo $login |awk -F" " '{print $10}' | sed -r "s/'//g"`
-    waktu=$(echo $login |awk -F" " '{print $2"-"$1,$3}')
-    [[ -z $user ]] && continue
-    echo "$user|$PID|$waktu"
-    fi
-done
-}
 fun_menu() {
     [[ "${message_from_id[$id]}" == "$id_admin" ]] && {
         local env_msg
