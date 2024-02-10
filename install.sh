@@ -1,98 +1,25 @@
 #!/bin/bash
+# INSTALADO --- ACTULIZADO EL 12-01-2023 --By @Kalix1
 clear && clear
-rm -rf /etc/localtime &>/dev/null
-ln -s /usr/share/zoneinfo/America/Argentina/Tucuman /etc/localtime &>/dev/null
-
-apt install net-tools -y &>/dev/null
-myip=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0' | head -n1)
-myint=$(ifconfig | grep -B1 "inet addr:$myip" | head -n1 | awk '{print $1}')
-rm -rf /etc/localtime &>/dev/null
-ln -s /usr/share/zoneinfo/America/Mexico_City /etc/localtime &>/dev/null
-rm -rf /usr/local/lib/systemubu1 &>/dev/null
-rm -rf /etc/versin_script &>/dev/null
-v1=$(curl -sSL "https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Vercion")
-echo "$v1" >/etc/versin_script
-[[ ! -e /etc/versin_script ]] && echo 1 >/etc/versin_script
-v22=$(cat /etc/versin_script)
-vesaoSCT="\033[1;31m [ \033[1;32m($v22)\033[1;97m\033[1;31m ]"
-### COLORES Y BARRA
-msg() {
-  BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
-  AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' && NEGRITO='\e[1m' && SEMCOR='\e[0m'
-  case $1 in
-  -ne) cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}" ;;
-  -ama) cor="${AMARELO}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}" ;;
-  -verm) cor="${AMARELO}${NEGRITO}[!] ${VERMELHO}" && echo -e "${cor}${2}${SEMCOR}" ;;
-  -azu) cor="${MAG}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}" ;;
-  -verd) cor="${VERDE}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}" ;;
-  -bra) cor="${VERMELHO}" && echo -ne "${cor}${2}${SEMCOR}" ;;
-  -nazu) cor="${COLOR[6]}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}" ;;
-  -gri) cor="\e[5m\033[1;100m" && echo -ne "${cor}${2}${SEMCOR}" ;;
-  "-bar2" | "-bar") cor="${VERMELHO}————————————————————————————————————————————————————" && echo -e "${SEMCOR}${cor}${SEMCOR}" ;;
-  esac
-}
-fun_bar() {
-  comando="$1"
-  _=$(
-    $comando >/dev/null 2>&1
-  ) &
-  >/dev/null
-  pid=$!
-  while [[ -d /proc/$pid ]]; do
-    echo -ne " \033[1;33m["
-    for ((i = 0; i < 20; i++)); do
-      echo -ne "\033[1;31m##"
-      sleep 0.5
-    done
-    echo -ne "\033[1;33m]"
-    sleep 1s
-    echo
-    tput cuu1
-    tput dl1
-  done
-  echo -e " \033[1;33m[\033[1;31m########################################\033[1;33m] - \033[1;32m100%\033[0m"
-  sleep 1s
-}
-
-print_center() {
-  if [[ -z $2 ]]; then
-    text="$1"
-  else
-    col="$1"
-    text="$2"
-  fi
-
-  while read line; do
-    unset space
-    x=$(((54 - ${#line}) / 2))
-    for ((i = 0; i < $x; i++)); do
-      space+=' '
-    done
-    space+="$line"
-    if [[ -z $2 ]]; then
-      msg -azu "$space"
-    else
-      msg "$col" "$space"
-    fi
-  done <<<$(echo -e "$text")
-}
-
-title() {
-  clear
-  msg -bar
-  if [[ -z $2 ]]; then
-    print_center -azu "$1"
-  else
-    print_center "$1" "$2"
-  fi
-  msg -bar
-}
-
-stop_install() {
-  title "INSTALACION CANCELADA"
+colores="$(pwd)/colores"
+rm -rf ${colores}
+wget -O ${colores} "https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Otros/colores" &>/dev/null
+[[ ! -e ${colores} ]] && exit
+chmod +x ${colores} &>/dev/null
+source ${colores}
+CTRL_C() {
+  rm -rf ${colores}
+  rm -rf /root/LATAM
   exit
 }
-
+trap "CTRL_C" INT TERM EXIT
+rm $(pwd)/$0 &>/dev/null
+#-- VERIFICAR ROOT
+if [ $(whoami) != 'root' ]; then
+  echo ""
+  echo -e "\e[1;31m NECESITAS SER USER ROOT PARA EJECUTAR EL SCRIPT \n\n\e[97m                DIGITE: \e[1;32m sudo su\n"
+  exit
+fi
 os_system() {
   system=$(cat -n /etc/issue | grep 1 | cut -d ' ' -f6,7,8 | sed 's/1//' | sed 's/      //')
   distro=$(echo "$system" | awk '{print $1}')
@@ -102,111 +29,200 @@ os_system() {
   Ubuntu) vercion=$(echo $system | awk '{print $2}' | cut -d '.' -f1,2) ;;
   esac
 }
-
 repo() {
   link="https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Source-List/$1.list"
   case $1 in
   8 | 9 | 10 | 11 | 16.04 | 18.04 | 20.04 | 20.10 | 21.04 | 21.10 | 22.04) wget -O /etc/apt/sources.list ${link} &>/dev/null ;;
   esac
 }
-
-dependencias() {
-  soft="sudo bsdmainutils zip unzip ufw curl python python3 python3-pip openssl screen cron iptables lsof pv boxes nano at mlocate gawk grep bc jq curl npm nodejs socat netcat netcat-traditional net-tools cowsay figlet lolcat"
-
-  for i in $soft; do
-    leng="${#i}"
-    puntos=$((21 - $leng))
-    pts="."
-    for ((a = 0; a < $puntos; a++)); do
-      pts+="."
-    done
-    msg -nazu "    Instalando $i$(msg -ama "$pts")"
-    if apt install $i -y &>/dev/null; then
-      msg -verd " INSTALADO"
-    else
-      msg -verm2 " ERROR"
-      sleep 2
-      tput cuu1 && tput dl1
-      print_center -ama "aplicando fix a $i"
-      dpkg --configure -a &>/dev/null
-      sleep 2
-      tput cuu1 && tput dl1
-
-      msg -nazu "    Instalando $i$(msg -ama "$pts")"
-      if apt install $i -y &>/dev/null; then
-        msg -verd " INSTALADO"
-      else
-        msg -verm2 " ERROR"
-      fi
-    fi
-  done
-}
-
-post_reboot() {
-  echo 'wget -O /root/install.sh "https://raw.githubusercontent.com/jorgevps10/LORLACK/main/install.sh"; clear; sleep 2; chmod +x /root/install.sh; /root/install.sh --continue' >>/root/.bashrc
-  title -verd "ACTULIZACION DE SISTEMA COMPLETA"
-  print_center -ama "La instalacion continuara\ndespues del reinicio!!!"
-  msg -bar
-}
-
-install_start() {
-  msg -bar
-
-  echo -e "\e[1;97m           \e[5m\033[1;100m   ACTULIZACION DE SISTEMA   \033[1;37m"
-  msg -bar
-  print_center -ama "Se actualizaran los paquetes del sistema.\n Puede demorar y pedir algunas confirmaciones.\n"
-  msg -bar3
-  msg -ne "\n Desea continuar? [S/N]: "
-  read opcion
-  [[ "$opcion" != @(s|S) ]] && stop_install
+## PRIMER PASO DE INSTALACION
+install_inicial() {
   clear && clear
-  msg -bar
-  echo -e "\e[1;97m           \e[5m\033[1;100m   ACTULIZACION DE SISTEMA   \033[1;37m"
-  msg -bar
+  #--VERIFICAR IP MANUAL
+  tu_ip() {
+    echo ""
+    echo -ne "\e[1;96m #Digite tu IP Publica (IPV4): \e[32m" && read IP
+    val_ip() {
+      local ip=$IP
+      local stat=1
+      if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        OIFS=$IFS
+        IFS='.'
+        ip=($ip)
+        IFS=$OIFS
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]
+        stat=$?
+      fi
+      return $stat
+    }
+    if val_ip $IP; then
+      echo "$IP" >/root/.ssh/authrized_key.reg
+    else
+      echo ""
+      echo -e "\e[31mLa IP Digitada no es valida, Verifiquela"
+      echo ""
+      sleep 5s
+      fun_ip
+    fi
+  }
+  #CONFIGURAR SSH-ROOT PRINCIPAL AMAZON, GOOGLE
+  pass_root() {
+    wget -O /etc/ssh/sshd_config https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Otros/sshd_config >/dev/null 2>&1
+    chmod +rwx /etc/ssh/sshd_config
+    service ssh restart
+    msgi -bar
+    echo -ne "\e[1;97m DIGITE NUEVA CONTRASEÑA:  \e[1;31m" && read pass
+    (
+      echo $pass
+      echo $pass
+    ) | passwd root 2>/dev/null
+    sleep 1s
+    msgi -bar
+    echo -e "\e[1;94m     CONTRASEÑA AGREGADA O EDITADA CORECTAMENTE"
+    echo -e "\e[1;97m TU CONTRASEÑA ROOT AHORA ES: \e[41m $pass \e[0;37m"
+
+  }
+  #-- VERIFICAR VERSION
+  v1=$(curl -sSL "https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Vercion")
+  echo "$v1" >/etc/version_instalacion
+  v22=$(cat /etc/version_instalacion)
+  vesaoSCT="\e[1;31m [ \e[1;32m( $v22 )\e[1;97m\e[1;31m ]"
+  #-- CONFIGURACION BASICA
   os_system
   repo "${vercion}"
-  apt update -y
+  msgi -bar2
+  echo -e " \e[5m\e[1;100m   =====>> ►►     SCRIPT HELLBOY VPS    ◄◄ <<=====    \e[1;37m"
+  msgi -bar2
+  #-- VERIFICAR VERSION
+  msgi -ama "   PREPARANDO INSTALACION | VERSION: $vesaoSCT"
+  ## PAQUETES-UBUNTU PRINCIPALES
+  echo ""
+  echo -e "\e[1;97m              🔎OS DE SU DROPLET VPS🔎 "
+  echo -e "\e[1;32m                 | $distro $vercion |"
+  echo ""
+  echo -e "\e[1;97m          ◽️ DESACTIVANDO PASS ALFANUMERICO ◽️ "
+  [[ $(dpkg --get-selections | grep -w "libpam-cracklib" | head -1) ]] || barra_intallb "apt-get install libpam-cracklib -y &>/dev/null"
+  echo -e '# Modulo Pass Simple
+password [success=1 default=ignore] pam_unix.so obscure sha512
+password requisite pam_deny.so
+password required pam_permit.so' >/etc/pam.d/common-password && chmod +x /etc/pam.d/common-password
+  [[ $(dpkg --get-selections | grep -w "libpam-cracklib" | head -1) ]] && barra_intallb "date"
+  service ssh restart >/dev/null 2>&1
+  echo ""
+  msgi -bar2
+  fun_ip() {
+    TUIP=$(wget -qO- ifconfig.me)
+    echo "$TUIP" >/root/.ssh/authrized_key.reg
+    echo -e "\e[1;97m ESTA ES TU IP PUBLICA? \e[32m$TUIP"
+    msgi -bar2
+    echo -ne "\e[1;97m Seleccione  \e[1;31m[\e[1;93m S \e[1;31m/\e[1;93m N \e[1;31m]\e[1;97m: S\e[1;93m" && read tu_ip
+    #read -p " Seleccione [ S / N ]: " S
+    [[ "$tu_ip" = "n" || "$tu_ip" = "N" ]] && tu_ip
+  }
+  fun_ip
+  msgi -bar2
+  echo -e "\e[1;93m             AGREGAR Y EDITAR PASS ROOT\e[1;97m"
+  msgi -bar
+  echo -e "\e[1;97m CAMBIAR PASS ROOT? \e[32m"
+  msgi -bar2
+  echo -ne "\e[1;97m Seleccione  \e[1;31m[\e[1;93m S \e[1;31m/\e[1;93m N \e[1;31m]\e[1;97m: N\e[1;93m" && read pass_root
+  #read -p " Seleccione [ S / N ]: "N"
+  [[ "$pass_root" = "s" || "$pass_root" = "S" ]] && pass_root
+  msgi -bar2
+  echo -e "\e[1;93m\a\a\a      SE PROCEDERA A INSTALAR LAS ACTULIZACIONES\n PERTINENTES DEL SISTEMA, ESTE PROCESO PUEDE TARDAR\n VARIOS MINUTOS Y PUEDE PEDIR ALGUNAS CONFIRMACIONES \e[0;37m"
+  msgi -bar
+  read -t 120 -n 1 -rsp $'\e[1;97m           Preciona Enter Para continuar\n'
+  clear && clear
+  apt update
   apt upgrade -y
+  wget -O /usr/bin/install https://raw.githubusercontent.com/jorgevps10/LORLACK/main/install.sh &>/dev/null
+  chmod +rwx /usr/bin/install
 }
 
-install_continue() {
-  os_system
-  msg -bar
-  echo -e "      \e[5m\033[1;100m   COMPLETANDO PAQUETES PARA EL SCRIPT   \033[1;37m"
-  msg -bar
-  print_center -ama "$distro $vercion"
-  print_center -verd "INSTALANDO DEPENDENCIAS"
-  msg -bar3
+time_reboot() {
+  clear && clear
+  msgi -bar
+  echo -e "\e[1;93m     CONTINUARA INSTALACION DESPUES DEL REINICIO"
+  echo -e "\e[1;93m         O EJECUTE EL COMANDO: \e[1;92mLATAM -c "
+  msgi -bar
+  REBOOT_TIMEOUT="$1"
+  while [ $REBOOT_TIMEOUT -gt 0 ]; do
+    print_center -ne "-$REBOOT_TIMEOUT-\r"
+    sleep 1
+    : $((REBOOT_TIMEOUT--))
+  done
+  reboot
+}
+
+dependencias() {
+  rm -rf /root/paknoinstall.log >/dev/null 2>&1
+  rm -rf /root/packinstall.log >/dev/null 2>&1
+  dpkg --configure -a >/dev/null 2>&1
+  apt -f install -y >/dev/null 2>&1
+  soft="sudo bsdmainutils zip screen unzip ufw curl python python3 python3-pip openssl cron iptables lsof pv boxes at mlocate gawk bc jq curl npm nodejs socat netcat netcat-traditional net-tools cowsay figlet lolcat apache2"
+
+ # for i in $soft; do
+  #  if [[ $(dpkg -s "$i" 2>/dev/null | grep "Status:.*installed") || $(rpm -qa 2>/dev/null | grep "$i") ]]; then
+   #   echo "$i está instalado." >> /root/packinstall.log
+    #else
+     # echo "$i" >> /root/paknoinstall.log
+    #fi
+  #done
+  #soft=$(cat /root/paknoinstall.log)
+  for i in $soft; do
+    paquete="$i"
+    echo -e "\e[1;97m        INSTALANDO PAQUETE \e[93m ------ \e[36m $i"
+    barra_intall "apt-get install $i -y"
+  done
+  rm -rf /root/paknoinstall.log >/dev/null 2>&1
+  rm -rf /root/packinstall.log >/dev/null 2>&1
+}
+
+install_paquetes() {
+  clear && clear
+  /bin/cp /etc/skel/.bashrc ~/
+  #------- BARRA DE ESPERA
+  msgi -bar2
+  echo -e " \e[5m\e[1;100m   =====>> ►►     MULTI SCRIPT     ◄◄ <<=====    \e[1;37m"
+  msgi -bar
+  echo -e "   \e[1;41m    -- INSTALACION PAQUETES FALTANTES --    \e[49m"
+  msgi -bar
   dependencias
-  msg -bar3
-  print_center -azu "Removiendo paquetes obsoletos"
+  sed -i "s;Listen 80;Listen 81;g" /etc/apache2/ports.conf >/dev/null 2>&1
+  service apache2 restart >/dev/null 2>&1
+  [[ $(sudo lsof -i :81) ]] || ESTATUSP=$(echo -e "\e[1;91m      >>>  FALLO DE INSTALACION EN APACHE <<<") &>/dev/null
+  [[ $(sudo lsof -i :81) ]] && ESTATUSP=$(echo -e "\e[1;92m          PUERTO APACHE ACTIVO CON EXITO") &>/dev/null
+  echo ""
+  echo -e "$ESTATUSP"
+  echo ""
+  echo -e "\e[1;97m        REMOVIENDO PAQUETES OBSOLETOS - \e[1;32m OK"
   apt autoremove -y &>/dev/null
-  sleep 2
-  tput cuu1 && tput dl1
-  msg -bar
-  print_center -ama "Si algunas de las dependencias fallo!!!\nal terminar, puede intentar instalar\nla misma manualmente usando el siguiente comando\napt install nom_del_paquete"
-  msg -bar
-  read -t 60 -n 1 -rsp $'\033[1;39m       << Presiona enter para Continuar >>\n'
+  echo iptables-persistent iptables-persistent/autosave_v4 boolean true | sudo debconf-set-selections
+  echo iptables-persistent iptables-persistent/autosave_v6 boolean true | sudo debconf-set-selections
+  msgi -bar2
+  read -t 30 -n 1 -rsp $'\e[1;97m           Preciona Enter Para continuar\n'
 }
 
+#SELECTOR DE INSTALACION
 while :; do
   case $1 in
-  -s | --start) install_start && install_continue ;;
+  -s | --start)
+    install_inicial && install_paquetes
+    break
+    ;;
+  -c | --continue)
+    install_paquetes
+    break
+    ;;
+  -m | --menu)
+    break
+    ;;
+  *) exit ;;
   esac
 done
 
-clear && clear
-msg -bar2
-echo -e " \e[5m\033[1;100m   =====>> ►► 🐲 MULTI - SCRIPT  🐲 ◄◄ <<=====   \033[1;37m"
-msg -bar2
-print_center -ama "LISTADO DE SCRIPT DISPONIBLES"
-msg -bar
-#-BASH SOPORTE ONLINE
-wget https://raw.githubusercontent.com/jorgevps10/LORLACK/main/LINKS-LIBRERIAS/SPR.sh -O /usr/bin/SPR >/dev/null 2>&1
-chmod +x /usr/bin/SPR
-
-#LACASITA V9
-Lacasita() {
+#LACASITA
+install_LACASITA_90() {
   clear && clear
   msgi -bar2
   echo -ne "\033[1;97m Digite su slogan: \033[1;32m" && read slogan
@@ -294,7 +310,7 @@ Lacasita() {
   echo 'export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games/' >>.bashrc
   echo 'echo ""' >>.bashrc
   #
-  echo 'figlet -f slant "HELLBOY VPS" |lolcat' >>.bashrc
+  echo 'figlet -f slant "JORGEMOD" |lolcat' >>.bashrc
   echo 'mess1="$(less /etc/VPS-MX/message.txt)" ' >>.bashrc
   echo 'echo "" ' >>.bashrc
   echo 'echo -e "\t\033[92mRESELLER : $mess1 "' >>.bashrc
@@ -342,31 +358,27 @@ clear
 }
 
 #MENUS
+clear && clear
 /bin/cp /etc/skel/.bashrc ~/
 /bin/cp /etc/skel/.bashrc /etc/bash.bashrc
-echo -ne " \e[1;93m [\e[1;32m1\e[1;93m]\033[1;31m > \e[1;97m INSTALAR 8.5 OFICIAL \e[97m \n"
-echo -ne " \e[1;93m [\e[1;32m2\e[1;93m]\033[1;31m > \033[1;97m INSTALAR 8.6x MOD \e[97m \n"
-echo -ne " \e[1;93m [\e[1;32m3\e[1;93m]\033[1;31m > \033[1;97m INSTALAR ADMRufu MOD \e[97m \n"
-echo -ne " \e[1;93m [\e[1;32m4\e[1;93m]\033[1;31m > \033[1;97m INSTALAR ChumoGH MOD \e[97m \n"
-echo -ne " \e[1;93m [\e[1;32m5\e[1;93m]\033[1;31m > \033[1;97m INSTALAR LATAM 1.1g (Organizando ficheros) \e[97m \n"
-msg -bar
-echo -ne "\033[1;97mDigite solo el numero segun su respuesta:\e[32m "
+msgi -bar2
+echo -e " \e[5m\e[1;100m   =====>> ►►  INSTALACION EXITOSA  ◄◄ <<=====   \e[1;37m"
+msgi -bar2
+#-- VERIFICAR VERSION
+v1=$(curl -sSL "https://raw.githubusercontent.com/jorgevps10/LORLACK/main/Vercion")
+echo "$v1" >/etc/version_instalacion
+v22=$(cat /etc/version_instalacion)
+vesaoSCT="\e[1;31m [ \e[1;32m( $v22 )\e[1;97m\e[1;31m ]"
+msgi -ama "   SELECCIONE SU SCRIPT ADM | VERSION: $vesaoSCT"
+msgi -bar2
+echo -ne "\e[1;93m [\e[1;32m1\e[1;93m]\e[1;31m >\e[1;97m LACASITA  \e[1;31m \e[97m \n"
+#echo -ne "\e[1;93m [\e[1;32m ARCHIVOS Y LINKS TOTALMENTE ABIERTOS Y PUBLICOS \e[1;93m]\e[1;96m\n       https://github.com/jorgevps10/LORLACK\e[97m \n"
+msgi -bar2
+echo -ne "\e[1;97mEscribe 1 para instalar:\e[32m "
 read opcao
 case $opcao in
 1)
-  Lacasita
-  ;;
-2)
-  install_mod
-  ;;
-3)
-  install_ADMRufu
-  ;;
-4)
-  install_ChumoGH
-  ;;
-5)
-  install_latam
+  install_LACASITA_90
   ;;
 esac
 exit
