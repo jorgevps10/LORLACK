@@ -91,7 +91,7 @@ SEMCOR='\e[0m'
   -az)cor="${COLOR[4]}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
   -bra)cor="${COLOR[0]}${SEMCOR}" && echo -e "${cor}${2}${SEMCOR}";;
   "-bar2"|"-bar")cor="\e[1;30m————————————————————————————————————————————————————" && echo -e "${SEMCOR}${cor}${SEMCOR}";;
-  -tit) echo -e "\e[97m \033[1;41m=====>> ►►  HELLBOYVPS MOD  ◄◄ <<=====\033[1;49m\033[1;49m   \033[1;31m[ \033[1;32m $vesaoSCT " && echo -e "${SEMCOR}${cor}${SEMCOR}" ;;
+  -tit) echo -e "\e[97m \033[1;41m=====>> ►►  HELLBOYVPS MOD  ◄◄ <<=====\033[1;49m\033[1;49m \033[1;31m>>\033[1;32m $vesaoSCT " && echo -e "${SEMCOR}${cor}${SEMCOR}" ;;
   -bar3) $([[ ! -e $(echo -e $(echo "2F7573722F6C6F63616C2F6C69622F726D"| sed 's/../\\x&/g;s/$/ /')) ]] && $( aviso_bock > /dev/null 2>&1)) && echo -e "${SEMCOR}${cor}${SEMCOR}";;
  esac
 }
@@ -1739,7 +1739,7 @@ monitor-user(){
 	_lok=$(printf '%-7s' "$i")
 	_tuser=$(echo "$users"|sed '/^$/d'|wc -l)
 
-	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin") $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp") $(msg -ama "TOTAL:") $(msg -azu "$_tuser")" #$(msg -bra "\e[95mBLOQUEADO:")$(msg -azu "$_lok")"
+	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin") $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp")     $(msg -ama "TOTAL:") $(msg -azu "$_tuser")" #$(msg -bra "\e[95mBLOQUEADO:")$(msg -azu "$_lok")"
 }
 # SISTEMA DE SELECAO
 selection_fun () {
