@@ -1806,7 +1806,7 @@ fi
 else
 [[ -e ${SCPdir}/USRonlines ]] && msg -bar && msg -ne "\033[1;97m LIMITADOR:\033[1;92m$verificar \033[1;97m AUTO-DESBLOQUEO:\033[1;92m$desbloqueo \e[1;97mMONITOR:\e[34m${limseg}s\n \033[1;32mCONECTADOS: " && echo -ne "\033[1;97m$(cat ${SCPdir}/USRonlines) "
 [[ -e ${SCPdir}/USRexpired ]] && msg -ne "   EXPIRADOS: " && echo -ne "\033[1;97m$(cat ${SCPdir}/USRexpired) "  && msg -ne " \033[1;95m BLOQUEADOS: " && echo -e "\033[1;97m$(cat ${SCPdir}/USRbloqueados)" #\n\033[1;97m        ACTULIZACION DE MONITOR CADA: \033[1;34m $limseg s" 
-fi
+
 monhtop () {
 clear 
 
