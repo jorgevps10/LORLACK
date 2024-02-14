@@ -298,18 +298,6 @@
  fi
  }
 
-#DEFINE CONTRASEÑA UNICA
- if define (){
-	mkdir_dir
- echo -e "$bar1"
- echo -e "${rojo}Antes de comenzar deve ingresar su contraseña"
- echo -e "$bar2"
- read -p "$(echo -e "${amarillo}[ingrese]: ${cierre}")" pass
- echo -e "$pass" >> $file_pass
- echo -e "$bar1"
- fi
- }
-
  add_token () {
  Fecha=`date +%d-%m-%y-%R`
  [[ $(cat /etc/passwd |grep $1: |grep -vi [a-z]$1 |grep -v [0-9]$1 > /dev/null) ]] && return 1

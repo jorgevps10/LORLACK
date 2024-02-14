@@ -878,7 +878,7 @@ export -f fun_bar
 export -f lacasita
 lacasita
 	msg -bar
-echo -e "  	\e[38m\e[42mPROTOCOLOS\e[0m  		  \e[38m\e[42mHERRAMIENTAS\e[0m"
+echo -e "  	\e[31m\e[42mPROTOCOLOS\e[0m  		  \e[31m\e[42mHERRAMIENTAS\e[0m"
 msg -bar
  if [[ ! -e /etc/noty ]]; then
  noty="\e[1;91m[OFF]"
