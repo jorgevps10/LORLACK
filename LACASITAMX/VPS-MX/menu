@@ -445,8 +445,8 @@ mb=$(printf '%-8s' "$(free -h | grep Mem | sed 's/\s\+/,/g' | cut -d , -f6)")
 _hora=$(printf '%(%H:%M:%S)T')
 _hoje=$(date +'%d/%m/%Y')
 
-echo -e "\033[1;37m OS \033[1;31m: \033[1;32m$_system \033[1;37mHORA\033[1;31m: \033[1;32m$_hora  \033[1;37mIP\033[1;31m:\033[1;32m $(meu_ip)"
-echo -e "\033[1;37m RAM\e[31m: \033[1;32m$_ram \033[1;37mUSADO\033[1;31m: \033[1;32m$mb\033[1;37m LIBRE\033[1;31m: \033[1;32m$_ram2"
+echo -e "\033[1;31m OS \033[1;31m: \033[1;32m$_system \033[1;31mHORA\033[1;31m: \033[1;32m$_hora  \033[1;31mIP\033[1;31m:\033[1;32m $(meu_ip)"
+echo -e "\033[1;31m RAM\e[31m: \033[1;32m$_ram \033[1;31mUSADO\033[1;32m: \033[1;32m$mb\033[1;31m LIBRE\033[1;31m: \033[1;32m$_ram2"
 
 }
 
@@ -1739,7 +1739,7 @@ monitor-user(){
 	_lok=$(printf '%-7s' "$i")
 	_tuser=$(echo "$users"|sed '/^$/d'|wc -l)
 
-	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin") $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp")     $(msg -ama "TOTAL:") $(msg -azu "$_tuser")" #$(msg -bra "\e[95mBLOQUEADO:")$(msg -azu "$_lok")"
+	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin")    $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp")    $(msg -ama "TOTAL:") $(msg -azu "$_tuser")" #$(msg -bra "\e[95mBLOQUEADO:")$(msg -azu "$_lok")"
 }
 # SISTEMA DE SELECAO
 selection_fun () {
