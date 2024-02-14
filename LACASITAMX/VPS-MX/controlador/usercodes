@@ -299,7 +299,7 @@
  }
 
 #DEFINE CONTRASEÑA UNICA
- define (){
+ if define (){
 	mkdir_dir
  echo -e "$bar1"
  echo -e "${rojo}Antes de comenzar deve ingresar su contraseña"
@@ -307,6 +307,7 @@
  read -p "$(echo -e "${amarillo}[ingrese]: ${cierre}")" pass
  echo -e "$pass" >> $file_pass
  echo -e "$bar1"
+ fi
  }
 
  add_token () {
