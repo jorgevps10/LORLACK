@@ -297,16 +297,17 @@
  msg -bar
  fi
  }
- 
-define (){
+
+#DEFINE CONTRASEÑA UNICA
+ define (){
 	mkdir_dir
-echo -e "$bar1"
-echo -e "${rojo}Antes de comenzar deve ingresar su contraseña"
-echo -e "$bar2"
-read -p "$(echo -e "${amarillo}[ingrese]: ${cierre}")" pass
-echo -e "$pass" >> $file_pass
-echo -e "$bar1"
-}
+ echo -e "$bar1"
+ echo -e "${rojo}Antes de comenzar deve ingresar su contraseña"
+ echo -e "$bar2"
+ read -p "$(echo -e "${amarillo}[ingrese]: ${cierre}")" pass
+ echo -e "$pass" >> $file_pass
+ echo -e "$bar1"
+ }
 
  add_token () {
  Fecha=`date +%d-%m-%y-%R`
