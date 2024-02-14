@@ -242,11 +242,6 @@ install_LACASITA_90() {
   echo "/etc/VPS-MX/menu" >/usr/bin/menu && chmod +x /usr/bin/menu
   echo "/etc/VPS-MX/menu" >/usr/bin/VPSMX && chmod +x /usr/bin/VPSMX
   echo "$slogan" >/etc/VPS-MX/message.txt
-  mkdir $HOME/BOT >/dev/null 2>&1
-  cd $HOME/BOT
-  wget https://raw.githubusercontent.com/vpsvip7/SSHPLUS/main/Sistema/ShellBot.sh >/dev/null 2>&1
-  chmod 777 ShellBot.sh > /dev/null 2>&1
-  cd > /dev/null 2>&1
   #UNLOKERS
   [[ ! -d /usr/local/lib ]] && mkdir /usr/local/lib
   [[ ! -d /usr/local/lib/ubuntn ]] && mkdir /usr/local/lib/ubuntn

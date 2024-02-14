@@ -1103,12 +1103,12 @@ fi
 echo -e "		\e[47m\e[41mMENU DE PROTOCOLOS 2\e[0m"
 msg -bar
 echo -e " \e[1;93m[\e[92m1\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "MENU ADM UDP CUSTOM")"
-echo -e " \e[1;93m[\e[92m2\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "INSTALADOR WS-EPRO")"
+echo -e " \e[1;93m[\e[92m2\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "INSTALADOR WS-EPRO V1")"
 echo -e " \e[1;93m[\e[92m3\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "INSTALADOR Y ADM PSIPHON")"
 echo -e " \e[1;93m[\e[92m4\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "OTRAS HERRAMIENTAS")"
 echo -e " \e[1;93m[\e[92m5\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "ADM PSIPHON 2 PRO")"
-echo -e " \e[1;93m[\e[92m6\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "PANEL ADM WS-EPRO 2.0")"
-#echo -e " \e[1;93m[\e[92m7\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "LIMPIAR PAQUETES OBSOLETOS")"
+echo -e " \e[1;93m[\e[92m6\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "PANEL ADM WS-EPRO V2")"
+echo -e " \e[1;93m[\e[92m7\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "MENU WS-EPRO V3")"
 #echo -e " \e[1;93m[\e[92m8\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "RESET IPTABLES")"
 #echo -e " \e[1;93m[\e[92m9\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "hola")"
 #echo -e " \e[1;93m[\e[92m10\e[93m]$(msg -verm2 "➛ ")$(msg -azu "CAMBIAR HOSTNAME VPS")"
@@ -1128,7 +1128,7 @@ case $select in
 4) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/MODULOS%20BIN%20HELLBOY/otrasherramientas.bin) ;;
 5) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/MODULOS%20BIN%20HELLBOY/menupsiphon2.bin) ;;
 6) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/MODULOS%20BIN%20HELLBOY/ws-epro/jorgevps10.bin) ;;
-#7)packobs ;;
+7) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/MODULOS%20BIN%20HELLBOY/ws-eproV3.bin) ;;
 #8)resetiptables ;;
 #9)reiniciar_vps ;;
 #10)host_name ;;
