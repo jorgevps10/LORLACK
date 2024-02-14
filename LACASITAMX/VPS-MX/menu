@@ -1739,7 +1739,7 @@ monitor-user(){
 	_lok=$(printf '%-7s' "$i")
 	_tuser=$(echo "$users"|sed '/^$/d'|wc -l)
 
-	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin") $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp") $(msg -bra "\e[95mBLOQUEADO:") $(msg -azu "$_lok")" #$(msg -ama "TOTAL:") $(msg -azu "$_tuser")"
+	echo -e " $(msg -verd "ONLINE:") $(msg -azu "$_onlin") $(msg -verm2 "EXPIRADOS:") $(msg -azu "$_userexp") $(msg -bra "\e[95mBLOQUEADO:") $(msg -azu "$_lok")" $(msg -ama "TOTAL:") $(msg -azu "$_tuser")"
 }
 # SISTEMA DE SELECAO
 selection_fun () {
