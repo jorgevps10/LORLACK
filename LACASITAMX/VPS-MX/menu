@@ -937,10 +937,10 @@ menu3 ;;
 10) menuapp && msg -ne "Enter Para Continuar" && read enter
 menu3 ;;
 11) adminbot ;;
-12) ${SCPinst}/wireguard.sh && msg -ne "Enter Para Continuar" && read enter
+12) noti ;;
+13) ${SCPinst}/chekuser.sh && msg -ne "Enter Para Continuar" && read enter
 menu3 ;;
-13) noti ;;
-14) ${SCPinst}/chekuser.sh && msg -ne "Enter Para Continuar" && read enter
+14) ${SCPinst}/wireguard.sh && msg -ne "Enter Para Continuar" && read enter
 menu3 ;;
 15) ${SCPfrm}/apacheon.sh;;
 16) ${SCPfrm}/blockBT.sh;;
