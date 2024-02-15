@@ -709,9 +709,7 @@
  1)new_user;;
  2)new_hwid;;
  3)new_token;;
- 4) 
- newtokenpass 
- ;;
+ 4) ${SCPfrm}/newtokenpass.sh ;;
  0) ;;
  esac
  }
