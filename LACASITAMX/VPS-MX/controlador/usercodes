@@ -702,7 +702,7 @@
  clear
  msg -bar
  msg -tit
- msg -ama " \e[1;33m[1] >\e[37mCREAR CUENTA NORMAL \e[0m \n \e[1;33m[2] >\e[37mCREAR CUENTA HWID \e[0m\n \e[1;33m[3] >\e[37mCREAR CUENTA TOKEN \e[0m\n \e[1;33m[4] >\e[37mCREAR CUENTA TOKEN CON PASS \e[0m\n \e[1;33m[5] >\e[37mCREAR CUENTA HWID V2 \e[0m\n \e[1;31m[0] \e[1;37m<- VOLVER"
+ msg -ama " \e[1;33m[1] > \e[37mCREAR CUENTA NORMAL \e[0m \n \e[1;33m[2] > \e[37mCREAR CUENTA HWID \e[0m\n \e[1;33m[3] > \e[37mCREAR CUENTA TOKEN \e[0m\n \e[1;33m[4] > \e[37mCREAR CUENTA TOKEN CON PASS \e[0m\n \e[1;33m[5] > \e[37mCREAR CUENTA HWID V2 \e[0m\n \e[1;31m[0] \e[1;37m<- VOLVER"
  msg -bar
  read -p " $(echo -e "\e[1;37mSeleccione Una Opcion [1/5]:\e[1;33m") " cuen
  case $cuen in
@@ -1796,7 +1796,7 @@
  [[ -z ${VERY2} ]] && desbloqueo="\033[1;31m[DESACTIVADO]" || desbloqueo="\033[1;32m[ACTIVO]"
  msg -bar
  msg -tit
- msg -verd "  >>>>>MENU ADMINISTRACION DE USUARIOS<<<<<"
+ msg -verd "  >>>>>   MENU ADMINISTRACION DE USUARIOS   <<<<<"
  msg -bar
  msg -bar3
  menu_func "CREAR NUEVO USUARIO >>>>> \e[97m\e[41mSSH/HWID/TOKEN \e[0m\e[37m" "CREAR USUARIO TEMPORAL" "REMOVER USUARIO >>>>>>>>> \e[97m\e[41mSSH/HWID/TOKEN \e[0m\e[37m" "BLOQUEAR |DESBLOQUEAR USUARIO" "REINICIAR CONTADOR DE BLOQUEADOS |EXPIRADOS" "EDITAR USUARIO" "RENOVAR USUARIO" "MOSTRAR CUENTAS >>>>>>>>> \e[97m\e[41mSSH/HWID/TOKEN \e[0m\e[37m" "USUARIOS CONECTADOS >>>>> \e[97m\e[41mSSH/HWID/TOKEN \e[0m\e[37m " "ELIMINAR USUARIOS VENCIDOS" "BACKUP USUARIOS" "AGREGAR/ELIMINAR BANNER " "\033[1;31m⚠️ELIMINAR TODOS LOS USUARIOS⚠️ \n" " -fi ${verificar}   \033[1;97m🔒LIMITADOR-DE-CUENTAS🔒 \n" " -fi ${desbloqueo}   \033[1;97m🔓DESBLOQUEO-AUTOMATICO🔓 \n" "\033[1;92mLOG DE CUENTAS REGISTRADAS" "LIMPIAR LOG DE LIMITADOR"
