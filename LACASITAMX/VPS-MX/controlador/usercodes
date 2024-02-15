@@ -702,13 +702,16 @@
  clear
  msg -bar
  msg -tit
- msg -ama " \e[1;33m[1] \e[37mCREAR CUENTA NORMAL \e[0m \n \e[1;33m[2] \e[37mCREAR CUENTA HWID \e[0m\n \e[1;33m[3] \e[37mCREAR CUENTA TOKEN \e[0m\n \e[1;31m[0] \e[1;37m<- VOLVER"
+ msg -ama " \e[1;33m[1] \e[37mCREAR CUENTA NORMAL \e[0m \n \e[1;33m[2] \e[37mCREAR CUENTA HWID \e[0m\n \e[1;33m[3] \e[37mCREAR CUENTA TOKEN \e[0m\n \e[37mCREAR CUENTA TOKEN CON PASS \e[0m\n \e[1;31m[0] \e[1;37m<- VOLVER"
  msg -bar
  read -p " $(echo -e "\e[1;37mSeleccione Una Opcion [1/3]:\e[1;33m") " cuen
  case $cuen in
  1)new_user;;
  2)new_hwid;;
  3)new_token;;
+ 4) 
+ newtokenpass 
+ ;;
  0) ;;
  esac
  }
