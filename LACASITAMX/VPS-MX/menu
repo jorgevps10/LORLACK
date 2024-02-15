@@ -878,7 +878,7 @@ export -f fun_bar
 export -f lacasita
 lacasita
 	msg -bar
-echo -e "  	\e[31m\e[42mPROTOCOLOS\e[0m  		  \e[31m\e[42mHERRAMIENTAS\e[0m"
+echo -e "  	\e[38m\e[45mPROTOCOLOS\e[0m  		  \e[38m\e[45mHERRAMIENTAS\e[0m"
 msg -bar
  if [[ ! -e /etc/noty ]]; then
  noty="\e[1;91m[OFF]"
@@ -903,7 +903,7 @@ echo -e "\e[1;93m[\e[92m7\e[93m]$(msg -verm2 "➛ ")$(msg -azu "SQUID         ${
 echo -e "\e[1;93m[\e[92m8\e[93m]$(msg -verm2 "➛ ")$(msg -azu "OPENVPN       ${inst[openvpn]}")  \e[1;93m[\e[92m22\e[93m]$(msg -verm2 "➛ ")$(msg -azu "SCANNER SUBDOMINIO")"
 echo -e "\e[1;93m[\e[92m9\e[93m]$(msg -verm2 "➛ ")$(msg -azu "SLOWDNS       ${inst[dns-serve]}")  \e[1;93m[\e[92m23\e[93m]$(msg -verm2 "➛ ")$(msg -azu "PRUEBA DE VELOCIDAD")"
 echo -e "\e[1;93m[\e[92m10\e[93m]$(msg -verm2 "➛ ")$(msg -azu "MONITOR APP  $app")  \e[1;93m[\e[92m24\e[93m]$(msg -verm2 "➛ ")$(msg -azu "FIX ORACLE/AWS/AZR")"
-echo -e "\e[1;93m[\e[92m11\e[93m]$(msg -verm2 "➛ ")$(msg -azu "BOT TELEGRAM $AD")  \e[1;93m[\e[92m25\e[93m]$(msg -verm2 "➛ ")$(msg -azu "\e[47m\e[41mHERRAMIENTAS BASICAS\e[0m")"
+echo -e "\e[1;93m[\e[92m11\e[93m]$(msg -verm2 "➛ ")$(msg -azu "BOT TELEGRAM $AD")  \e[1;93m[\e[92m25\e[93m]$(msg -verm2 "➛ ")$(msg -azu "\e[38m\e[45mHERRAMIENTAS BASICAS\e[0m")"
 #echo -e "\e[1;93m[\e[92m12\e[93m]$(msg -verm2 "➛ ")$(msg -azu "WIREGUARD    ${inst[wg]}")  $(msg -verd "[0] ")$(msg -verm2 "➛ ")$(msg -azu "VOLVER  ")" 
 echo -e "\e[1;93m[\e[92m12\e[93m]$(msg -verm2 "➛ ")$(msg -azu "NOTI-BOT     $noty") \e[1;93m [\e[92m26\e[93m]$(msg -verm2 "➛ ")$(msg -azu "\e[47m\e[41mMENU DE PROTOCOLOS 2\e[0m")"
 echo -e "\e[1;93m[\e[92m13\e[93m]$(msg -verm2 "➛ ")$(msg -azu "CHECK-USER   $chek")"
@@ -1100,7 +1100,7 @@ if [ -e /etc/squid/squid.conf ]; then
 elif [ -e /etc/squid3/squid.conf ]; then
 [[ `grep -c "^#CACHE_DO_SQUID" /etc/squid3/squid.conf` -gt 0 ]] && squi=$off || squi=$on
 fi
-echo -e "		\e[38m\e[42mMENU DE PROTOCOLOS 2\e[0m"
+echo -e "		\e[38m\e[45mMENU DE PROTOCOLOS 2\e[0m"
 msg -bar
 echo -e " \e[1;93m[\e[92m1\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "MENU ADM UDP CUSTOM")"
 echo -e " \e[1;93m[\e[92m2\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "INSTALADOR WS-EPRO V1")"
@@ -1152,7 +1152,7 @@ if [ -e /etc/squid/squid.conf ]; then
 elif [ -e /etc/squid3/squid.conf ]; then
 [[ `grep -c "^#CACHE_DO_SQUID" /etc/squid3/squid.conf` -gt 0 ]] && squi=$off || squi=$on
 fi
-echo -e "		\e[38m\e[42mHERRAMIENTAS BASICOS\e[0m"
+echo -e "		\e[38m\e[45mHERRAMIENTAS BASICOS\e[0m"
 msg -bar
 echo -e " \e[1;93m[\e[92m1\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "ACTUALIZAR HORA LOCAL")"
 echo -e " \e[1;93m[\e[92m2\e[93m]$(msg -verm2 " ➛ ")$(msg -azu "HTOP")"
@@ -1832,10 +1832,10 @@ msg -bar
 msg -bar
 msg -bar3
 on="\e[1;32m[ON]" && off="\e[1;31m[OFF]"
-echo -e " \e[1;93m[\e[92m1\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS | SSH/SSL/DROPBEAR")" 
-echo -e " \e[1;93m[\e[92m2\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS | SS/SSRR")" 
-echo -e " \e[1;93m[\e[92m3\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS | V2RAY --> $vra")"
-echo -e " \e[1;93m[\e[92m4\e[93m] $(msg -verm2 "➛ ") \e[1;38m\e[42mPROTOCOLOS\e[0m  \e[93m||  \e[1;38m\e[42mHERRAMIENTAS\e[0m"
+echo -e " \e[1;93m[\e[92m1\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS>>>SSH/SSL/DROPBEAR")" 
+echo -e " \e[1;93m[\e[92m2\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS>>>SS/SSRR")" 
+echo -e " \e[1;93m[\e[92m3\e[93m] $(msg -verm2 "➛ ") $(msg -azu "ADMINISTRAR USUARIOS>>>V2RAY --> $vra")"
+echo -e " \e[1;93m[\e[92m4\e[93m] $(msg -verm2 "➛ ") \e[1;38m\e[45mPROTOCOLOS\e[0m  \e[93m<>  \e[1;38m\e[45mHERRAMIENTAS\e[0m"
 echo -e " \e[1;93m[\e[92m5\e[93m] $(msg -verm2 "➛ ") $(msg -azu "MONITOR DE PROTOCOLOS ---------> ${monitorserv}")"
 echo -e " \e[1;93m[\e[92m6\e[93m] $(msg -verm2 "➛ ") $(msg -azu "AUTO INICIAR SCRIPT -----------> $AutoRun ")"
 msg -bar

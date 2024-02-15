@@ -709,7 +709,7 @@
  1)new_user;;
  2)new_hwid;;
  3)new_token;;
- 4) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/newtokenpass.bin);;
+ 4) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/TOKENV1.bin);;
  5) bash <(curl -sL https://raw.githubusercontent.com/jorgevps10/modulosbin/main/HWID.bin);;
  0) ;;
  esac
